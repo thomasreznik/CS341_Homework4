@@ -8,7 +8,7 @@ public class bsTree {
 		root = null;
 	}
 
-	// Delete Node
+	//Delete Node
 	public void deleteNode(int n) {
 		assert (found(n) && !(isEmpty())) : "The node for " + n + "doesn't exist";
 		// Variables
