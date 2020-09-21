@@ -1,16 +1,21 @@
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class bsTree {
 	// data elements
 	public Node root;
+	public ArrayList<Integer> nodes;
 
 	// constructor
 	public bsTree() {
 		root = null;
+		nodes = new ArrayList<Integer>();
 	}
 
-	//Delete Node
+	// Delete Node
 	public void deleteNode(int n) {
-		assert (found(n) && !(isEmpty())) : "The node for " + n + "doesn't exist";
+		nodes.remove(Integer.valueOf(n));
+		assert (found(n) && !(isEmpty())) : "The node for " + n + " doesn't exist";
 		// Variables
 		Node toDelete = root;
 		Node parentoTD = null;
@@ -60,8 +65,9 @@ public class bsTree {
 			smallestParent.right = smallest.right;
 		} else
 			smallestParent.left = smallest.right;
-
-		assert (!found(n)) : "This node " + " is still found and exists, so the Node wasn't deleted";
+		
+		// Check if it is still a binary search tree
+		assert BinarytreeCheck(): "This tree is not a binary search tree";
 	}
 
 	public void displayInorder() {
@@ -113,6 +119,7 @@ public class bsTree {
 
 	// addNode method
 	public void addNode(int n) {
+		nodes.add(n);
 
 		assert !found(n) : "The node for " + n + " already is in existance";
 
@@ -143,8 +150,8 @@ public class bsTree {
 
 			}
 		}
-
-		assert (found(n) && !isEmpty()) : "This node " + n + "was not added to tree";
+//Check if it is still a binary search tree
+		assert BinarytreeCheck(): "This tree is not a binary search tree";
 	}
 
 	public int CountNodes(Node loc) {
@@ -154,9 +161,9 @@ public class bsTree {
 		return 1 + CountNodes(loc.left) + CountNodes(loc.right);
 	}
 
-	public void displayCountNodes() { // Part of Helper Method
-		System.out.println(CountNodes(root));
-
+	public int displayCountNodes() { // Part of Helper Method
+	//	System.out.println(CountNodes(root));
+	return CountNodes(root);
 	}
 
 	public boolean isEmpty() {
@@ -204,6 +211,18 @@ public class bsTree {
 
 		}
 		return count;
+	}
+
+	public boolean BinarytreeCheck() {
+		return checkBin(root, Collections.min(nodes), Collections.max(nodes));
+	}
+
+	public boolean checkBin(Node newn, int min, int max) {
+		if (newn == null)
+			return true;
+		if (newn. n < min || newn.n > max)
+			return false;
+		return (checkBin(newn.left, min, newn.n - 1) && checkBin(newn.right, newn.n + 1, max));
 	}
 
 	public void displaysingleParent() {
